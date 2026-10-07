@@ -1,1 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gym Management System</title>
 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        input, select, button {
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background: #eeeeee;
+        }
+
+        .delete {
+            color: red;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Gym Membership Management System</h1>
+
+    <h2>Add Member</h2>
+
+    <form action="/add" method="POST">
+
+        <input type="text" name="name" placeholder="Member Name" required>
+
+        <input type="text" name="phone" placeholder="Phone Number" required>
+
+        <input type="email" name="email" placeholder="Email" required>
+
+        <select name="gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+
+        <input type="date" name="join_date" required>
+
+        <button type="submit">Add Member</button>
+
+    </form>
+
+    <h2>Members</h2>
+
+    <table>
+
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Join Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+
+        {% for member in members %}
+
+        <tr>
+            <td>{{ member.member_id }}</td>
+            <td>{{ member.name }}</td>
+            <td>{{ member.phone }}</td>
+            <td>{{ member.email }}</td>
+            <td>{{ member.gender }}</td>
+            <td>{{ member.join_date }}</td>
+            <td>{{ member.status }}</td>
+
+            <td>
+                <a class="delete"
+                   href="/delete/{{ member.member_id }}"
+                   onclick="return confirm('Delete this member?');">
+                   Delete
+                </a>
+            </td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+</body>
+</html>
