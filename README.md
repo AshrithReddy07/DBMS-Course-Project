@@ -5,6 +5,8 @@
 ### Team Members
 
 1. Ashrith Vardhan Reddy - 25WU0102320
+2. Panjagala Vineel - 25WU0102299
+3. Manikanta Reddy - 25WU0102321
 
 ### Project Description
 
