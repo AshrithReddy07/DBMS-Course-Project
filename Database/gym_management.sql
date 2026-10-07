@@ -1,4 +1,4 @@
-CREATE DATABASE gym_management;
+CREATE DATABASE IF NOT EXISTS gym_management;
 
 USE gym_management;
 
@@ -20,9 +20,8 @@ CREATE TABLE Membership (
     end_date DATE NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
     status VARCHAR(20) DEFAULT 'Active',
-
     FOREIGN KEY (member_id)
-    REFERENCES Member(member_id)
+        REFERENCES Member(member_id)
 );
 
 CREATE TABLE Trainer (
@@ -40,9 +39,8 @@ CREATE TABLE Fitness_Session (
     session_date DATE NOT NULL,
     session_time TIME NOT NULL,
     capacity INT NOT NULL,
-
     FOREIGN KEY (trainer_id)
-    REFERENCES Trainer(trainer_id)
+        REFERENCES Trainer(trainer_id)
 );
 
 CREATE TABLE Booking (
@@ -51,12 +49,10 @@ CREATE TABLE Booking (
     session_id INT NOT NULL,
     booking_date DATE NOT NULL,
     booking_status VARCHAR(20) DEFAULT 'Booked',
-
     FOREIGN KEY (member_id)
-    REFERENCES Member(member_id),
-
+        REFERENCES Member(member_id),
     FOREIGN KEY (session_id)
-    REFERENCES Fitness_Session(session_id)
+        REFERENCES Fitness_Session(session_id)
 );
 
 INSERT INTO Member
@@ -104,21 +100,13 @@ VALUES
 (4,4,'2026-10-02','Booked'),
 (5,5,'2026-10-03','Cancelled');
 
-SELECT * FROM Member;
-
-SELECT * FROM Membership;
-
-SELECT * FROM Trainer;
-
-SELECT * FROM Fitness_Session;
-
-SELECT * FROM Booking;
-
+-- JOIN QUERY 1
 SELECT m.name, ms.plan_name, ms.amount, ms.status
 FROM Member m
 JOIN Membership ms
 ON m.member_id = ms.member_id;
 
+-- JOIN QUERY 2
 SELECT m.name, s.session_name, s.session_date,
        s.session_time, b.booking_status
 FROM Booking b
@@ -127,13 +115,16 @@ ON b.member_id = m.member_id
 JOIN Fitness_Session s
 ON b.session_id = s.session_id;
 
+-- AGGREGATE QUERY 1
 SELECT plan_name, COUNT(*) AS total_members
 FROM Membership
 GROUP BY plan_name;
 
+-- AGGREGATE QUERY 2
 SELECT AVG(amount) AS average_membership_fee
 FROM Membership;
 
+-- AGGREGATE QUERY 3
 SELECT t.trainer_name,
        COUNT(s.session_id) AS total_sessions
 FROM Trainer t
